@@ -1,4 +1,4 @@
-// Copyright 2017 The Cockroach Authors.
+// Copyright 2020 The Cockroach Authors.
 //
 // Use of this software is governed by the Business Source License
 // included in the file licenses/BSL.txt.
@@ -8,7 +8,7 @@
 // by the Apache License, Version 2.0, included in the file
 // licenses/APL.txt.
 
-// +build !windows,!illumos
+// +build illumos
 
 package log
 
@@ -32,11 +32,11 @@ func dupFD(fd uintptr) (uintptr, error) {
 	// subprocesses that hold references to the stdin or stderr pipes, go test
 	// will hang until the subprocesses exit, rather defeating the purpose of
 	// a timeout.
-	nfd, _, errno := unix.Syscall(unix.SYS_FCNTL, fd, unix.F_DUPFD_CLOEXEC, 0)
-	if errno != 0 {
-		return 0, errno
+	nfd, err := unix.FcntlInt(fd, unix.F_DUPFD_CLOEXEC, 0)
+	if err != nil {
+		return 0, err
 	}
-	return nfd, nil
+	return uintptr(nfd), nil
 }
 
 // redirectStderr is used to redirect internal writes to fd 2 to the
