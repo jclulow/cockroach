@@ -17,8 +17,6 @@ import (
 	"os"
 	"os/user"
 	"syscall"
-
-	"github.com/cockroachdb/errors"
 )
 
 // ProcessIdentity returns a string describing the user and group that this
@@ -29,12 +27,6 @@ func ProcessIdentity() string {
 		return "<unknown>"
 	}
 	return fmt.Sprintf("uid %s, gid %s", u.Uid, u.Gid)
-}
-
-// StatFS returns an FSInfo describing the named filesystem. It is only
-// supported on Unix-like platforms.
-func StatFS(path string) (*FSInfo, error) {
-	return nil, errors.New("unsupported on Windows")
 }
 
 // StatAndLinkCount wraps os.Stat, returning its result and a zero link count.
