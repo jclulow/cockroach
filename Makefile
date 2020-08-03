@@ -170,7 +170,7 @@ bindir       := $(prefix)/bin
 # Avoid reusing GOFLAGS as that is overwritten by various release processes.
 GOMODVENDORFLAGS := -mod=vendor
 
-ifeq "$(findstring -j,$(shell ps -o args= $$PPID))" ""
+ifeq "$(findstring -j,$(shell ps -o args= -p $$PPID))" ""
 ifdef NCPUS
 MAKEFLAGS += -j$(NCPUS)
 $(info Running make with -j$(NCPUS))
