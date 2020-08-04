@@ -613,7 +613,7 @@ vendor/github.com/knz/go-libedit/unix/zcgo_flags_extra.go: Makefile | bin/.submo
 # Flags needed to make cryptopp to runtime detection of AES cpu instruction sets.
 # pclmul and ssse3 need to be defined for the overall AES switch but are only used
 # in GCM mode (not currently in use by cockroach).
-$(CRYPTOPP_DIR)/Makefile: aes := $(if $(findstring x86_64,$(TARGET_TRIPLE)),-maes -mpclmul -mssse3)
+#$(CRYPTOPP_DIR)/Makefile: aes := $(if $(findstring x86_64,$(TARGET_TRIPLE)),-maes -mpclmul -mssse3)
 $(CRYPTOPP_DIR)/Makefile: $(C_DEPS_DIR)/cryptopp-rebuild | bin/.submodules-initialized
 	rm -rf $(CRYPTOPP_DIR)
 	mkdir -p $(CRYPTOPP_DIR)
@@ -665,7 +665,7 @@ $(PROTOC_DIR)/Makefile: $(C_DEPS_DIR)/protobuf-rebuild | bin/.submodules-initial
 	  -DCMAKE_BUILD_TYPE=Release
 endif
 
-$(ROCKSDB_DIR)/Makefile: sse := $(if $(findstring x86_64,$(TARGET_TRIPLE)),-msse3)
+#$(ROCKSDB_DIR)/Makefile: sse := $(if $(findstring x86_64,$(TARGET_TRIPLE)),-msse3)
 $(ROCKSDB_DIR)/Makefile: $(C_DEPS_DIR)/rocksdb-rebuild | bin/.submodules-initialized $(LIBSNAPPY) $(if $(use-stdmalloc),,$(LIBJEMALLOC))
 	rm -rf $(ROCKSDB_DIR)
 	mkdir -p $(ROCKSDB_DIR)
